@@ -30,6 +30,8 @@ import numpy as np
 import grpc
 import time
 
+import threading
+
 # import os
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import tensorflow as tf
@@ -62,6 +64,26 @@ def get_label(index):
   global _label_map
   return _label_map.item[index].display_name
 
+def send_request(stub, inputs, run_num, batch_size, client_id):
+  durationSum = 0.0
+
+  request = predict_pb2.PredictRequest()    
+  request.model_spec.name = 'ssd_inception_v2_coco'
+  request.model_spec.signature_name = 'serving_default'
+
+  request.inputs['inputs'].CopyFrom(tf.contrib.util.make_tensor_proto(inputs, shape=inputs.shape))
+
+  for i in range(run_num):
+
+    start = time.time()
+    result = stub.Predict(request, 10.0)
+    end = time.time()
+    duration = end - start
+    durationSum += duration
+    # print("duration = %f" % duration)
+
+  print("[client %d] average duration for batch size of %d = %f" % (client_id, batch_size, durationSum / run_num))
+
 def main(_):
   s = open('mscoco_complete_label_map.pbtxt', 'r').read()
   mymap = labelmap.StringIntLabelMap()
@@ -71,13 +93,12 @@ def main(_):
   channel = grpc.insecure_channel(FLAGS.server)
   stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
 
-  durationSum = 0.0
+  # durationSum = 0.0
+  thread_num = 10
   run_num = 10
-  batch_size = 16
+  batch_size = 1
 
   image, org = decode_image_opencv(FLAGS.image)
-  # _draw = org.copy()
-
   image = image.astype(np.uint8)
   inputs = image
   for i in range(batch_size - 1):
@@ -88,54 +109,29 @@ def main(_):
   request.model_spec.signature_name = 'serving_default'
   request.inputs['inputs'].CopyFrom(tf.contrib.util.make_tensor_proto(inputs, shape=inputs.shape))
 
-  for i in range(run_num):
+  # warmup
+  warmup_num = 3
+  for i in range(warmup_num):
 
     start = time.time()
     result = stub.Predict(request, 10.0)
     end = time.time()
     duration = end - start
-    durationSum += duration
-    print("duration = %f" % duration)
-    # print(result)
+    print("warmup duration = %f" % duration)
 
-    # boxes = result.outputs['detection_boxes']
-    # scores = result.outputs['detection_scores']
-    # labels = result.outputs['detection_classes']
-    # num_detections= result.outputs['num_detections']
+  start = time.time()
 
-    # boxes= tf.make_ndarray(boxes)
-    # scores= tf.make_ndarray(scores)
-    # labels= tf.make_ndarray(labels)
-    # num_detections= tf.make_ndarray(num_detections)
+  thread_pool = []
+  for i in range(thread_num):
+    t = threading.Thread(target = send_request, args = (stub, inputs, run_num, batch_size, i,))
+    thread_pool.append(t)
+    t.start()
 
-    # print("boxes output",(boxes).shape)
-    # print("scores output",(scores).shape)
-    # print("labels output",(labels).shape)
-    # print('num_detections',num_detections[0])
+  for t in thread_pool:
+    t.join()
 
-    # # visualize detections hints from 
-    # # # https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
-
-    # for box, score, label in zip(boxes[0], scores[0], labels[0]):
-    #   # scores are sorted so we can break
-    #   if score < 0.3:
-    #       break
-    #   #dim = image.shape[0:2]
-    #   dim = _draw.shape
-    #   #print("Label-raw",labels_to_names[label-1]," at ",box," Score ",score)
-    #   box = box_normal_to_pixel(box, dim)
-    #   b = box.astype(int)
-    #   class_label = get_label(int(label))
-    #   print("Label",class_label ," at ",b," Score ",score)
-    #   # draw the image and write out
-    #   cv2.rectangle(_draw,(b[0],b[1]),(b[2],b[3]),(0,0,255),1)
-    #   cv2.putText(_draw,class_label + "-"+str(round(score,2)), (b[0]+2,b[1]+8),\
-    #      cv2.FONT_HERSHEY_SIMPLEX, .45, (0,0,255))
-
-    # cv2.imshow("test", _draw)
-    # cv2.waitKey(0)
-
-  print("average duration for batch size of %d = %f" % (batch_size, durationSum / run_num))
+  end = time.time()
+  print("overall time = %f" % (end - start))
 
 if __name__ == '__main__':
   tf.app.run()
