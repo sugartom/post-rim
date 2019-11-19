@@ -78,6 +78,7 @@ def main(_):
 
   request_array = []
   batch_size_array = [1, 1, 4, 4, 1, 4]
+  # batch_size_array = [10, 9, 8, 7, 6, 5]
 
   for batch_size in batch_size_array:
     inputs = image
