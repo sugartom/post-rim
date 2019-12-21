@@ -1,3 +1,5 @@
 dive-batching/test_ssd/out-*
 dive-batching/test_ssd/ssd_inception_v2_coco_2018_01_28/*
+dive-batching/test_ssd/ssd_resnet50_v1_fpn_shared_box_predictor_640x640_coco14_sync_2018_07_03/*
+dive-batching/test_ssd/ssd_mobilenet_v1_ppn_shared_box_predictor_300x300_coco14_sync_2018_07_03/*
 dive-batching/test_ssd/*.pyc
