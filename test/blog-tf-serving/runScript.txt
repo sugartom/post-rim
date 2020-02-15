@@ -1,0 +1,3 @@
+From https://mux.com/blog/tuning-performance-of-tensorflow-serving-pipeline/
+
+tensorflow_model_server --port=8500 --model_name=resnet --model_base_path=/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/blog-tf-serving/resnet_v2_fp32_savedmodel_NHWC >out-001 2>&1
