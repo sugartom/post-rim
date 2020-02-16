@@ -45,8 +45,12 @@ from image_preprocessor import decode_image_opencv
 
 tf.app.flags.DEFINE_string('server', 'localhost:8500',
                            'PredictionService host:port')
-tf.app.flags.DEFINE_string('image', '/home/yitao/Documents/fun-project/tensorflow-related/post-rim/dive-batching/test_ssd/lion.jpg', 'path to image in JPEG format')
+tf.app.flags.DEFINE_string('image', '/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/lion.jpg', 'path to image in JPEG format')
 FLAGS = tf.app.flags.FLAGS
+
+# model_name = 'ssd_inception_v2_coco'
+model_name = 'ssd_resnet50'
+# model_name = 'ssd_mobilenet'
 
 def box_normal_to_pixel(box, dim, scalefactor = 1):
   # https://github.com/tensorflow/models/blob/master/research/object_detection/utils/visualization_utils.py
@@ -77,7 +81,9 @@ def main(_):
   image = image.astype(np.uint8)
 
   request_array = []
-  batch_size_array = [1, 1, 4, 4, 1, 4]
+  # batch_size_array = [1, 1, 4, 4, 1, 4]
+  batch_size_array = [1, 2, 4, 8, 16, 32]
+  # batch_size_array = [32, 16, 8, 4, 2, 1]
   # batch_size_array = [10, 9, 8, 7, 6, 5]
 
   for batch_size in batch_size_array:
@@ -86,7 +92,7 @@ def main(_):
       inputs = np.append(inputs, image, axis = 0)
 
     request = predict_pb2.PredictRequest()    
-    request.model_spec.name = 'ssd_inception_v2_coco'
+    request.model_spec.name = model_name
     request.model_spec.signature_name = 'serving_default'
     request.inputs['inputs'].CopyFrom(tf.contrib.util.make_tensor_proto(inputs, shape=inputs.shape))
 
@@ -102,11 +108,12 @@ def main(_):
       start = time.time()
       result = stub.Predict(request, 10.0)
       end = time.time()
-      duration = end - start
-      durationSum += duration
-      print("duration = %f" % duration)
+      if (j != 0):
+        duration = end - start
+        durationSum += duration
+        print("duration = %f" % duration)
 
-    print("average duration for batch size of %d = %f" % (batch_size, durationSum / run_num))
+    print("average duration for batch size of %d = %f" % (batch_size, durationSum / (run_num - 1)))
 
 if __name__ == '__main__':
   tf.app.run()
