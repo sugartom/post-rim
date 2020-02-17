@@ -1,0 +1,1 @@
+tensorflow_model_server --port=8500 --model_name=traffic_yolo --model_base_path=/home/yitao/Downloads/tmp/docker-share/module_traffic/models/traffic_yolo >out-001 2>&1
