@@ -2,6 +2,7 @@ test/test_ssd/out-*
 test/test_ssd/ssd_inception_v2_coco_2018_01_28/*
 test/test_ssd/ssd_resnet50_v1_fpn_shared_box_predictor_640x640_coco14_sync_2018_07_03/*
 test/test_ssd/ssd_mobilenet_v1_ppn_shared_box_predictor_300x300_coco14_sync_2018_07_03/*
+test/test_ssd/faster_rcnn_resnet50_coco_2018_01_28/*
 test/test_ssd/*.pyc
 test/blog-tf-serving/resnet_v2_fp32_savedmodel_NHWC/*
 tensorrt-inference-server/model_repository/*

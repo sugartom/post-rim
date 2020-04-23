@@ -4,3 +4,4 @@ tensorflow_model_server --enable_batching --batching_parameters_file=batching_co
 
 tensorflow_model_server --port=8500 --model_name=ssd_resnet50 --model_base_path=/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/ssd_resnet50_v1_fpn_shared_box_predictor_640x640_coco14_sync_2018_07_03 >out-001 2>&1
 tensorflow_model_server --port=8500 --model_name=ssd_mobilenet --model_base_path=/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/ssd_mobilenet_v1_ppn_shared_box_predictor_300x300_coco14_sync_2018_07_03 >out-001 2>&1
+tensorflow_model_server --port=8500 --model_name=faster_rcnn_resnet50 --model_base_path=/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/faster_rcnn_resnet50_coco_2018_01_28 >out-001 2>&1

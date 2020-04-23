@@ -45,7 +45,7 @@ from image_preprocessor import decode_image_opencv
 
 tf.app.flags.DEFINE_string('server', 'localhost:8500',
                            'PredictionService host:port')
-tf.app.flags.DEFINE_string('image', '/home/yitao/Documents/fun-project/tensorflow-related/post-rim/dive-batching/test_ssd/lion.jpg', 'path to image in JPEG format')
+tf.app.flags.DEFINE_string('image', '/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/lion.jpg', 'path to image in JPEG format')
 FLAGS = tf.app.flags.FLAGS
 
 def box_normal_to_pixel(box, dim, scalefactor = 1):
@@ -83,8 +83,13 @@ def main(_):
   for i in range(batch_size - 1):
     inputs = np.append(inputs, image, axis = 0)
 
+  # model_name = "ssd_inception_v2_coco"
+  # model_name = "ssd_mobilenet"
+  # model_name = "ssd_resnet50"
+  model_name = "faster_rcnn_resnet50"
+
   request = predict_pb2.PredictRequest()    
-  request.model_spec.name = 'ssd_inception_v2_coco'
+  request.model_spec.name = model_name
   request.model_spec.signature_name = 'serving_default'
   request.inputs['inputs'].CopyFrom(tf.contrib.util.make_tensor_proto(inputs, shape=inputs.shape))
 
@@ -118,7 +123,7 @@ def main(_):
 
     for box, score, label in zip(boxes[0], scores[0], labels[0]):
       # scores are sorted so we can break
-      if score < 0.3:
+      if score < 0.5:
           break
       #dim = image.shape[0:2]
       dim = _draw.shape
