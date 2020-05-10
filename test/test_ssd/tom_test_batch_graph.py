@@ -108,12 +108,12 @@ def main(_):
       start = time.time()
       result = stub.Predict(request, 10.0)
       end = time.time()
+      duration = end - start
+      print("duration = %f" % duration)
       if (j != 0):
-        duration = end - start
         durationSum += duration
-        print("duration = %f" % duration)
 
-    print("average duration for batch size of %d = %f" % (batch_size, durationSum / (run_num - 1)))
+    print("average duration (warm-up excluded) for batch size of %d = %f" % (batch_size, durationSum / (run_num - 1)))
 
 if __name__ == '__main__':
   tf.app.run()
