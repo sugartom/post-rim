@@ -6,3 +6,4 @@ test/test_ssd/faster_rcnn_resnet50_coco_2018_01_28/*
 test/test_ssd/*.pyc
 test/blog-tf-serving/resnet_v2_fp32_savedmodel_NHWC/*
 tensorrt-inference-server/model_repository/*
+test/test_profiler/*.json

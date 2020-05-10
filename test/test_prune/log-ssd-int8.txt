@@ -1,0 +1,27 @@
+root@bc81dffd8ef4:/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd# python tom_test_batch_graph.py 
+WARNING: Logging before flag parsing goes to stderr.
+W0510 23:00:46.803570 139835021530880 deprecation_wrapper.py:119] From tom_test_batch_graph.py:119: The name tf.app.run is deprecated. Please use tf.compat.v1.app.run instead.
+
+('original image shape=', (371, 660, 3))
+('Scale factor=', 0)
+('resized image shape=', (1, 800, 1423, 3))
+('decode time=', 0.03699994087219238)
+W0510 23:00:47.419261 139835021530880 lazy_loader.py:50] 
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+duration = 7.781527
+duration = 0.164721
+duration = 0.155952
+duration = 0.135253
+duration = 0.136997
+duration = 0.181572
+duration = 0.134742
+duration = 0.151654
+duration = 0.156412
+duration = 0.151103
+average duration (warm-up excluded) for batch size of 1 = 0.152045
