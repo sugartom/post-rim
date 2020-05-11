@@ -1,0 +1,82 @@
+root@567d26c68ac9:/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd# python tom_test_batch_graph.py 
+WARNING: Logging before flag parsing goes to stderr.
+W0510 23:35:26.971254 139824623257344 deprecation_wrapper.py:119] From tom_test_batch_graph.py:119: The name tf.app.run is deprecated. Please use tf.compat.v1.app.run instead.
+
+('original image shape=', (371, 660, 3))
+('Scale factor=', 0)
+('resized image shape=', (1, 800, 1423, 3))
+('decode time=', 0.045259952545166016)
+W0510 23:35:27.606601 139824623257344 lazy_loader.py:50] 
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+duration = 46.794135
+duration = 0.138699
+duration = 0.146846
+duration = 0.111593
+duration = 0.125591
+duration = 0.121131
+duration = 0.102001
+duration = 0.119484
+duration = 0.163651
+duration = 0.130769
+average duration (warm-up excluded) for batch size of 1 = 0.128863
+duration = 0.251866
+duration = 0.172606
+duration = 0.183873
+duration = 0.161976
+duration = 0.187329
+duration = 0.185726
+duration = 0.166971
+duration = 0.169421
+duration = 0.187644
+duration = 0.203728
+average duration (warm-up excluded) for batch size of 2 = 0.179919
+duration = 1.119612
+duration = 0.329776
+duration = 0.315113
+duration = 0.357577
+duration = 0.340334
+duration = 0.318439
+duration = 0.356333
+duration = 0.339252
+duration = 0.291398
+duration = 0.340506
+average duration (warm-up excluded) for batch size of 4 = 0.332081
+duration = 1.029352
+duration = 0.652857
+duration = 0.583976
+duration = 0.592334
+duration = 0.614791
+duration = 0.544908
+duration = 0.638271
+duration = 0.603832
+duration = 0.593256
+duration = 0.542498
+average duration (warm-up excluded) for batch size of 8 = 0.596303
+duration = 1.661964
+duration = 1.205418
+duration = 1.046526
+duration = 1.094354
+duration = 0.998256
+duration = 1.045114
+duration = 1.088060
+duration = 1.102427
+duration = 1.185770
+duration = 1.142203
+average duration (warm-up excluded) for batch size of 16 = 1.100903
+duration = 2.927475
+duration = 2.099116
+duration = 2.047170
+duration = 2.079794
+duration = 2.064764
+duration = 2.063379
+duration = 2.068662
+duration = 2.065235
+duration = 2.071297
+duration = 2.076957
+average duration (warm-up excluded) for batch size of 32 = 2.070708

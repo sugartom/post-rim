@@ -7,3 +7,4 @@ test/test_ssd/*.pyc
 test/blog-tf-serving/resnet_v2_fp32_savedmodel_NHWC/*
 tensorrt-inference-server/model_repository/*
 test/test_profiler/*.json
+test/test_prune/out-*
