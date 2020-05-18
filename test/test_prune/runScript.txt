@@ -7,3 +7,8 @@ saved_model_cli convert --dir /tmp/ssd_inception/1 --output_dir /tmp/ssd_incepti
 docker run --gpus all --cpuset-cpus 0-6 -it -p 50101:50101 --name container-serving1 -v ~/Downloads/tmp/docker-share:/home/yitao/Downloads/tmp/docker-share sugartom/edge-publish:rim-test
 tensorflow_model_server --port=8500 --model_name=ssd_inception_v2_coco --model_base_path=/home/yitao/Downloads/tmp/docker-share/trt_test/ssd_inception >out-001 2>&1 &
 python tom_test_batch_graph.py
+
+
+tensorflow_model_server --port=8500 --model_config_file=/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/warmup_two_model_concurrently.conf >out-001 2>&1
+tensorflow_model_server --port=8500 --model_config_file=/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/warmup_two_model_concurrently_fp16.conf >out-001 2>&1
+python tom_warmup_two_model_concurrently.py
