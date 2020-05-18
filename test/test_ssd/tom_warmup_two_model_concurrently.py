@@ -70,7 +70,7 @@ def send_request(stub, inputs, model_name, run_num):
   request.model_spec.signature_name = 'serving_default'
   request.inputs['inputs'].CopyFrom(tf.contrib.util.make_tensor_proto(inputs, shape=inputs.shape))
 
-  for i in range(10):
+  for i in range(run_num):
     start = time.time()
     result = stub.Predict(request, 60.0)
     end = time.time()
