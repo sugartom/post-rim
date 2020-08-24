@@ -51,8 +51,8 @@ tf.app.flags.DEFINE_string('server', 'localhost:8500',
 tf.app.flags.DEFINE_string('image', '/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/lion.jpg', 'path to image in JPEG format')
 FLAGS = tf.app.flags.FLAGS
 
-# model_name = 'ssd_inception_v2_coco'
-model_name = 'ssd_resnet50'
+model_name = 'ssd_inception_v2_coco'
+# model_name = 'ssd_resnet50'
 # model_name = 'ssd_mobilenet'
 
 def box_normal_to_pixel(box, dim, scalefactor = 1):
@@ -100,9 +100,12 @@ def main(_):
   stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
 
   # durationSum = 0.0
-  thread_num = 4
-  run_num = 10
-  batch_size = 16
+  thread_num = int(sys.argv[1])
+  # run_num = 10
+  batch_size = int(sys.argv[2])
+
+  run_num = 1024 / (thread_num * batch_size)
+  print("[INFO] thread_num = %d, batch_size = %d, run_num = %d" % (thread_num, batch_size, run_num))
 
   image, org = decode_image_opencv(FLAGS.image)
   image = image.astype(np.uint8)

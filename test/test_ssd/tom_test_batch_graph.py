@@ -48,8 +48,8 @@ tf.app.flags.DEFINE_string('server', 'localhost:8500',
 tf.app.flags.DEFINE_string('image', '/home/yitao/Documents/fun-project/tensorflow-related/post-rim/test/test_ssd/lion.jpg', 'path to image in JPEG format')
 FLAGS = tf.app.flags.FLAGS
 
-# model_name = 'ssd_inception_v2_coco'
-model_name = 'ssd_resnet50'
+model_name = 'ssd_inception_v2_coco'
+# model_name = 'ssd_resnet50'
 # model_name = 'ssd_mobilenet'
 
 def box_normal_to_pixel(box, dim, scalefactor = 1):
@@ -75,14 +75,14 @@ def main(_):
   channel = grpc.insecure_channel(FLAGS.server)
   stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
 
-  run_num = 10
+  run_num = 20
 
   image, org = decode_image_opencv(FLAGS.image)
   image = image.astype(np.uint8)
 
   request_array = []
   # batch_size_array = [1, 1, 4, 4, 1, 4]
-  batch_size_array = [1, 2, 4, 8, 16, 32]
+  batch_size_array = [1, 2, 4, 8, 16, 32, 64, 128]
   # batch_size_array = [32, 16, 8, 4, 2, 1]
   # batch_size_array = [10, 9, 8, 7, 6, 5]
 
@@ -97,6 +97,9 @@ def main(_):
     request.inputs['inputs'].CopyFrom(tf.contrib.util.make_tensor_proto(inputs, shape=inputs.shape))
 
     request_array.append(request)
+
+  print("Done with input preparation")
+  raw_input("Press Enter to continue...\n")
 
   for i in range(len(batch_size_array)):
     batch_size = batch_size_array[i]
