@@ -109,9 +109,15 @@ def main(_):
 
   image, org = decode_image_opencv(FLAGS.image)
   image = image.astype(np.uint8)
+
+  t0 = time.time()
+
   inputs = image
   for i in range(batch_size - 1):
     inputs = np.append(inputs, image, axis = 0)
+
+  t1 = time.time()
+  print("\n[INFO] preparing input data takes %.3f sec\n" % (t1 - t0))
 
   request = predict_pb2.PredictRequest()    
   request.model_spec.name = model_name

@@ -83,10 +83,10 @@ def main(_):
   for i in range(batch_size - 1):
     inputs = np.append(inputs, image, axis = 0)
 
-  # model_name = "ssd_inception_v2_coco"
+  model_name = "ssd_inception_v2_coco"
   # model_name = "ssd_mobilenet"
   # model_name = "ssd_resnet50"
-  model_name = "faster_rcnn_resnet50"
+  # model_name = "faster_rcnn_resnet50"
 
   request = predict_pb2.PredictRequest()    
   request.model_spec.name = model_name

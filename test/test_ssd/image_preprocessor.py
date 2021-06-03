@@ -13,9 +13,9 @@ def decode_image_opencv(img_path,max_height=800,swapRB=True,imagenet_mean = (0,0
   #todo https://docs.nvidia.com/deeplearning/sdk/dali-developer-guide/docs/examples/getting%20started.html
   start = timer()
   image = cv2.imread(img_path,1)
-  print("original image shape=",image.shape)
+  # print("original image shape=",image.shape)
   (h, w) = image.shape[:2]
-  print("Scale factor=", h/max_height) #we are currenly drawing in original so this is not relevant
+  # print("Scale factor=", h/max_height) #we are currenly drawing in original so this is not relevant
   image = image_resize(image,height=max_height)
   org  = image
   #IMAGENET_MEAN = (103.939, 116.779, 123.68)
@@ -27,12 +27,12 @@ def decode_image_opencv(img_path,max_height=800,swapRB=True,imagenet_mean = (0,0
   # this gives   shape as  (1, 3, 480, 640))
   image = np.transpose(image, (0, 2, 3, 1))
   # we get it after transpose as ('Input shape=', (1, 480, 640, 3))
-  print("resized image shape=",image.shape)
+  # print("resized image shape=",image.shape)
   # for original image we take the first image, (the first dim is number of images)
   #org = image[0,:,:,:] 
   #print("Draw shape=",org.shape)
   end = timer()
-  print("decode time=",end - start)
+  # print("decode time=",end - start)
   return image,org
 
 #https://stackoverflow.com/a/44659589/429476

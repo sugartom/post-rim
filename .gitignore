@@ -9,3 +9,5 @@ tensorrt-inference-server/model_repository/*
 test/test_profiler/*.json
 test/test_prune/out-*
 plot/gaussian_distribution/*.pdf
+test/test_mnist/out-*
+test/test_mnist/*.pyc
